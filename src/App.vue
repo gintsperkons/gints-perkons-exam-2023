@@ -1,42 +1,32 @@
+
+<script>
+import { useAuthStore } from "@/stores/auth";
+
+export default {
+    data() {
+        return {
+            useAuthStore
+        }
+    }
+}
+</script>
+
+
 <template>
     <!--  HEADER  -->
-    <Header></Header>
+    <Header v-if="!useAuthStore.is_authenticated"></Header>
     <!--  HEADER END  -->
 
     <!--  BODY  -->
     <div id="section-body">
-        <nav id="nav-main" class="wrapper-navigation">
-            <ol>
-                <li>
-                    <a href="/">SONGS</a>
-                </li>
-                <li>
-                    <a href="/albums">ALBUMS</a>
-                </li>
-                <li>
-                    <a href="/about">ABOUT</a>
-                </li>
-            </ol>
-        </nav>
+        <Navigation v-if="!useAuthStore.is_authenticated"></Navigation>
         <router-view class="section-router"></router-view>
     </div>
     <!--  BODY END  -->
 
     <!--  PLAYER  -->
-    <div id="section-player">
+    <div id="section-player" v-if="!useAuthStore.is_authenticated">
         <AudioPlayer />
     </div>
     <!--  PLAYER END  -->
 </template>
-
-<script>
-    import Header from '@/components/HeaderComponent.vue';
-    import AudioPlayer from '@/components/AudioPlayerComponent.vue';
-
-    export default {
-        components: {
-            Header,
-            AudioPlayer
-        }
-    }
-</script>
