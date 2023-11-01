@@ -14,18 +14,18 @@ export default {
 
 <template>
     <!--  HEADER  -->
-    <Header v-if="!useAuthStore.is_authenticated"></Header>
+    <Header v-if="useAuthStore().is_authenticated"></Header>
     <!--  HEADER END  -->
 
     <!--  BODY  -->
     <div id="section-body">
-        <Navigation v-if="!useAuthStore.is_authenticated"></Navigation>
+        <Navigation v-if="useAuthStore().is_authenticated"></Navigation>
         <router-view class="section-router"></router-view>
     </div>
     <!--  BODY END  -->
 
     <!--  PLAYER  -->
-    <div id="section-player" v-if="!useAuthStore.is_authenticated">
+    <div id="section-player" v-if="useAuthStore().is_authenticated">
         <AudioPlayer />
     </div>
     <!--  PLAYER END  -->

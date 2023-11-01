@@ -37,6 +37,7 @@ export const useAuthStore = defineStore("auth", {
     logout() {
       localStorage.clear();
       this.user.authenticated = false;
+      window.location.href = "/login";
     },
     toggleFavorite(songID) {
       const index = this.user.favorite_songs.indexOf(songID);
