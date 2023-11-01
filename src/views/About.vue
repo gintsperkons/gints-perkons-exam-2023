@@ -1,28 +1,53 @@
-<script></script>
+<script>
+import { useAuthStore } from "@/stores/auth";
+
+export default {
+    data() {
+        return {
+            useAuthStore,
+            state: {
+                    editing: false,
+                    editBtnText: "Edit Form",
+                    user: {
+                        name: useAuthStore().user.name,
+                        surname: useAuthStore().user.surname,
+                        code: useAuthStore().user.code
+                    }
+                }
+        }
+    },
+    methods :{
+        editCall : function () {
+            this.state.editing = !this.state.editing;
+            this.state.editBtnText = this.state.editing ? "Cancel" : "Edit Form";   
+        }
+    }
+}
+</script>
 <template>
    <div id="about-view">
     <div class="wrapper-header">
         <h1>ABOUT ME</h1>
         <div class="settings">
-            <button id="btn-edit">Edit Form</button>
-            <button id="btn-save">Save Form</button>
+            <button id="btn-edit"  :class="{ active: state.editing }" @click="editCall"> {{ state.editBtnText }}</button>  
+            <button v-if="state.editing" id="btn-save">Save Form</button>
         </div>
     </div>
     <form>
         <div class="wrapper-input">
             <label>NAME</label>
-            <input id="input-name" />
-            <p id="txt-name">John</p>
+            <input v-if="state.editing" id="input-name" :value="state.user.name" />
+            <p    v-if="!state.editing" id="txt-name">{{useAuthStore().user.name}}</p>
         </div>
         <div class="wrapper-input">
             <label>SURNAME</label>
-            <input id="input-surname" />
-            <p id="txt-surname">Smith</p>
+            <input v-if="state.editing"  id="input-surname" :value="state.user.surname" />
+            <p  v-if="!state.editing" id="txt-surname">{{useAuthStore().user.surname}}</p>
         </div>
         <div class="wrapper-input">
             <label>STUDENT CODE</label>
-            <input id="input-code" />
-            <p id="txt-code">IT1234</p>
+            <input v-if="state.editing"  id="input-code" :value="state.user.code" />
+            <p v-if="!state.editing"  id="txt-code">{{useAuthStore().user.code}}</p>
         </div>
         <div class="wrapper-songs">
             <label>FAVORITE SONGS</label>
