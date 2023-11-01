@@ -7,7 +7,7 @@ export const useAuthStore = defineStore("auth", {
       name: "Gints Kristaps",
       surname: "Pērkons",
       code: "IT21011",
-      favorite_songs: localStorage.favorite_songs ?? [],
+      favorite_songs: JSON.parse(localStorage.getItem('favorite_songs')) ?? [],
     },
     authenticated: false,
   }),
@@ -40,13 +40,14 @@ export const useAuthStore = defineStore("auth", {
       window.location.href = "/login";
     },
     toggleFavorite(songID) {
-      const index = this.user.favorite_songs.indexOf(songID);
-      if (index === -1) {
+      const index = this.user.favorite_songs.findIndex((song) => song === songID);
+      if (index == -1) {
         this.user.favorite_songs.push(songID);
       } else {
         this.user.favorite_songs.splice(index, 1);
       }
-      localStorage.favorite_songs = this.user.favorite_songs;
+      
+localStorage.setItem('favorite_songs', JSON.stringify(this.user.favorite_songs));
     },
   },
 });
